@@ -19,7 +19,7 @@
   </p>
 </div>
 
-[中文](#) | [English](./docs/README_EN.md) | [快速上手](#-快速上手) | [功能详解](#-功能详解) | [FAQ](#-常见问题) | [LICENSE](#-开源协议)
+[中文](#) | [English](./docs/README_EN.md) | [快速上手](#-快速上手) | [核心特性](#-核心特性) | [界面截图](#-界面截图) | [FAQ](#-常见问题) | [LICENSE](#-开源协议)
 
 ---
 
@@ -54,7 +54,7 @@
 ### 路线 A · Docker Compose（不想装 Python）
 
 ```bash
-git clone <repo> && cd outfit-video-studio
+git clone <repo> && cd outfit-snap
 cp backend/.env.example backend/.env
 # 编辑 .env,改 COMFY_OUTPUT_DIR / COMFY_API
 docker compose up -d --build
@@ -69,7 +69,7 @@ docker compose down -v      # ⚠️ 删数据卷(素材/数据库全清)
 ### 路线 B · 本地 Python（推荐开发者）
 
 ```bash
-git clone <repo> && cd outfit-video-studio/backend
+git clone <repo> && cd outfit-snap/backend
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
@@ -82,7 +82,7 @@ python run.py
 ### Mac / Linux
 
 ```bash
-git clone <repo> && cd outfit-video-studio
+git clone <repo> && cd outfit-snap
 cp backend/.env.example backend/.env
 # 编辑 .env
 cd backend && pip install -r requirements.txt && python run.py
@@ -170,7 +170,7 @@ cd backend && pip install -r requirements.txt && python run.py
 ## 🏗️ 目录结构
 
 ```
-outfit-video-studio/
+outfit-snap/
 ├── backend/                 # FastAPI 后端 (Python 3.11+)
 │   ├── app/                 #   业务代码
 │   │   ├── main.py          #   入口 + Lifespan + 静态文件挂载
@@ -290,8 +290,8 @@ python -m pytest tests/ -v
 ### Docker 镜像
 
 ```bash
-docker build -t outfit-video-studio:dev .
-docker run --rm -it -p 8000:8000 outfit-video-studio:dev
+docker build -t outfit-snap:dev .
+docker run --rm -it -p 8000:8000 outfit-snap:dev
 ```
 
 ---
