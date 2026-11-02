@@ -363,7 +363,7 @@ A: Delete `backend/app.db` and `backend/storage/` assets and start fresh. Or swi
 
 ## 📜 License
 
-MIT License — use, modify, fork freely.
+MIT License — commercial use, modification, and distribution permitted under the terms of the license.
 
 ```
 Copyright (c) 2026 OutfitSnap Contributors

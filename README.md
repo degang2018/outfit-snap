@@ -364,7 +364,7 @@ A: 删掉 `backend/app.db` 和 `backend/storage/` 里的素材重新来；或者
 
 ## 📜 开源协议 / License
 
-MIT License — 随便用、随便改、随便 fork。
+MIT License — 允许商业使用、修改、分发，遵守协议条款即可。
 
 ```
 Copyright (c) 2026 Outfit Video Studio Contributors
