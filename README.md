@@ -3,11 +3,6 @@
 ### 🇨🇳 衣秒成片 · AI 分镜短视频工坊
 
 > 上传人物参考图 + 场景 + 道具 + 衣服，按分镜编排：衣服飞入换装、场景切换、人物动作变化、推拉摇移机位等，一键渲染拼接成一条带货视频。
-
-### 🇺🇸 AI Storyboard Short Video Studio
-
-> Upload character references + scenes + props + garments, arrange into shots: flying-in outfit flips, scene cuts, pose changes, push-in/pan camera moves… MiniMax H3 + ComfyUI renders and stitches everything into a complete product video.
-
 ---
 
 [![状态](https://img.shields.io/badge/状态-开发中-orange)](#)
@@ -127,14 +122,6 @@ cd backend && pip install -r requirements.txt && python run.py
 节点之间可串联，支持图片 / 文本 / 视频素材，点哪个渲染哪个，重跑不影响已经好的镜。
 
 <img src="./docs/images/editor-flow.png" alt="编辑器节点式编排">
-
-### 换装效果 · 衣服飞入
-
-衣服飞入是本项目的特色玩法 — 每件新衣服占一镜，悬浮飞入 / 落定 / 换下一套。
-
-**想看更多实际成片？去抖音搜 →** 👉 **[小桃爆爆](https://www.douyin.com/search/%E5%B0%8F%E6%A1%83%E7%88%86%E7%88%86)** — 那里发了几十条用本工具生成的完整带货视频，每条都是好几件衣服依次换上去的成片。
-
-上面首屏那个视频就是一条 **换装分镜** 的实时渲染结果（约 4 秒）。
 
 ---
 

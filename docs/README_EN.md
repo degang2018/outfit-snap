@@ -125,14 +125,6 @@ Nodes chain freely, with image / text / video assets. Render one, rerun one, or 
 
 <img src="./images/editor-flow.png" alt="Editor node flow">
 
-### Flying-In Outfit Flips
-
-The signature feature — each new garment = one shot, flying in off-screen, settling, and swapping the previous one out of frame.
-
-**Want to see finished videos in action?** Search Douyin for → **[小桃爆爆](https://www.douyin.com/search/%E5%B0%8F%E6%A1%83%E7%88%86%E7%88%86)** — dozens of full product clips made with this tool are posted there.
-
-The clip at the top of this page is a real-time render of a single flip shot (~4 seconds).
-
 ---
 
 ## 🎯 Complete Workflow
