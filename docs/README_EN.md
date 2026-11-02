@@ -1,6 +1,6 @@
-## 👗 OutfitSnap · AI Outfit-Flip Short Video Studio
+## 👗 OutfitSnap · AI Storyboard Short Video Studio
 
-> Upload one reference photo of a person + a few flat-lay shots of new clothes. Each garment flies in from off-camera, lands on the model, and pushes the previous one out of frame. **MiniMax H3** + **ComfyUI** + automatic garment recognition — you pick the outfits, AI does the rest.
+> Upload character references + scenes + props + garments, arrange into shots: flying-in outfit flips, scene cuts, pose changes, push-in/pan camera moves… MiniMax H3 + ComfyUI renders and stitches everything into a complete product video.
 
 ---
 
@@ -22,17 +22,17 @@ https://github.com/user-attachments/assets/a495e83b-8bb4-4beb-8729-91e3cc6640d2
 
 ## ✨ Core Features
 
-| 🪄 One-Garment-Per-Shot Auto Flip | 🧠 Zero-Setup Garment Recognition | 🎬 Auto Concat & Color Grade | 🔧 Fine-Grained Garment Controls |
-| ------------------------ | ----------------------------- | --------------------- | -------------- |
-| Each new garment gets its own shot — fly-in, settle, swap | Upload flat-lay, auto-detect name, style, button state | Flip shots + generic shots → auto color-match, push-in, flash-white transitions | Buttons open/closed, jacket half/full zip |
+| 🎬 Storyboard Editor | 🪄 Flying-In Outfit Flips | 👤 Identity Lock | 🔄 Scene / Pose / Camera Switch |
+| --------------------- | ------------------------ | ----------------- | ------------------------------- |
+| A project is a chain of shots — each renders independently, rerun any time | Each new garment = one shot — fly in, settle, swap out | Reference + avatar → same face across every shot in the video | Same character, different scene / pose / push-in / pan |
 
-| 🖼️ Asset Toolkit              | 👤 Identity Lock                  | 🌍 Zero-Build Cross-Platform                | 🐳 Docker One-Click |
-| --------------------------- | --------------------------- | -------------------------- | ----------------- |
-| Garment split / extract / eraser / shot manager | Reference photo + avatar → same face across every shot | Native on Windows / Linux / macOS | Containerized, GPU passthrough |
+| 🧠 Zero-Setup Garment Recognition | 🔧 Fine-Grained Garment Controls | 🖼️ Asset Toolkit | 🔌 ComfyUI Ecosystem |
+| -------------------------------- | ----------------------------- | ---------------- | --------------------- |
+| Upload flat-lay → auto-name / style / button-state detection | Buttons open/closed, jacket half/full zip | Garment split / extract / eraser / shot manager | Direct ComfyUI API calls, fully customizable workflows |
 
-| 💾 Persistent Asset Library               | ⚡ Auto VRAM-Aware Scaling                  | 🔌 ComfyUI Ecosystem Integration        | 🎨 Dual Frontend (Dev + Zero-Build) |
-| -------------------------- | ------------------------- | -------------------------- | --------------- |
-| Models/props/scenes/garments — upload once, reuse forever | 16GB card auto-downsamples generation, still renders 1080×1920 output | Direct ComfyUI API calls, fully customizable workflows | `standalone/` + `frontend/` both shipped |
+| 💾 Persistent Asset Library | 🧩 Four Video Gen Modes | 🌍 Zero-Build Cross-Platform | 🐳 Docker One-Click |
+| --------------------------- | ----------------------- | ---------------------------- | ------------------- |
+| Characters / props / scenes / garments — upload once, reuse forever | Reference / first-frame / first+last-frame / text-only | Native on Windows / Linux / macOS | Containerized, GPU passthrough |
 
 ---
 
@@ -133,24 +133,24 @@ Each shot renders independently → auto color-match / push-in / flash-white tra
 ## 🎯 Complete Workflow
 
 ```
-Step 1: Pick the model
-  ↓ Upload one reference photo + optional avatar crop
-  ↓ Auto-saved to asset library, reuse anytime
+Step 1: Build your asset library (persistent, upload once, reuse forever)
+  ↓ Character reference + avatar crop (identity lock)
+  ↓ Garment flat-lays (LLM auto-recognizes name / style / button state)
+  ↓ Scene images / props / wear-ref photos
   ↓
-Step 2: Upload garment flat-lays
-  ↓ One photo per garment (white-bg flat-lay or model-worn)
-  ↓ LLM auto-reads → detects name / style / button state
-  ↓ Grouped into an "outfit list"
+Step 2: Arrange into shots
+  ↓ One garment per shot?        → flying-in outfit flip (garment_fly)
+  ↓ Same character, new scene?   → scene-cut shot
+  ↓ Same scene, new pose?        → pose-change shot
+  ↓ Push-in / pan camera?        → camera option
+  ↓ Anything else?               → 4 gen modes: reference / first-frame /
+                                     first+last-frame / text-only
   ↓
-Step 3: One-click flip
-  ↓ Each garment = one shot, order = flip order
-  ↓ Tweak: buttons open/closed, jacket half/full
-  ↓
-Step 4: Render + Stitch
-  ↓ MiniMax H3 renders each shot
-  ↓ Auto color-match / push-in / flash transitions / speed
-  ↓ One final MP4
-  ↓ Download or fine-tune again
+Step 3: Render + stitch
+  ↓ MiniMax H3 renders each shot independently
+  ↓ Auto color-match / push-in / flash transitions / speed ramp
+  ↓ One final MP4 (1080×1920)
+  ↓ Download or fine-tune one shot and re-render
 ```
 
 ### Automation Comparison
