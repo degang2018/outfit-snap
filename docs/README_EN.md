@@ -110,23 +110,28 @@ One-stop panel for assets + utilities — garment split / extract / image eraser
 
 <img src="./images/assets-panel.png" width="280" alt="Asset sidebar">
 
-### Garment Splitter
+### Multi-Mode Shot Nodes
 
-Upload a person or model photo — clothes/pants/shoes are automatically separated into individual asset items you can drag into projects.
+Each shot is a node that supports **4 video-generation modes**:
 
-<img src="./images/split-tool.png" width="480" alt="Garment splitter">
+| Mode | Input | Use Case |
+|------|-------|----------|
+| **Reference-to-Video** (ref) | 1~N reference images | Character + scene → pose change |
+| **First-Frame-to-Video** (first) | 1 first frame | Static image → animate |
+| **First+Last-Frame** (first+last) | 2 images | Force specific start/end poses or actions |
+| **Text-to-Video** (text) | Prompt text | Generate from a single sentence |
 
-### Editor · Node-Style Flow
-
-Shots in a project are connected like nodes — each with its own reference image, prompt, and duration. Render one, rerun one, or re-render all independently.
+Nodes chain freely, with image / text / video assets. Render one, rerun one, or rerun all independently.
 
 <img src="./images/editor-flow.png" alt="Editor node flow">
 
-### Flip Effect
+### Flying-In Outfit Flips
 
-Each shot renders independently → auto color-match / push-in / flash-white transitions → stitched into one complete product-video short. The clip at the top of this page is a real-time render of a single flip shot (~4 seconds).
+The signature feature — each new garment = one shot, flying in off-screen, settling, and swapping the previous one out of frame.
 
 **Want to see finished videos in action?** Search Douyin for → **[小桃爆爆](https://www.douyin.com/search/%E5%B0%8F%E6%A1%83%E7%88%86%E7%88%86)** — dozens of full product clips made with this tool are posted there.
+
+The clip at the top of this page is a real-time render of a single flip shot (~4 seconds).
 
 ---
 
