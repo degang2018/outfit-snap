@@ -125,6 +125,20 @@ Nodes chain freely, with image / text / video assets. Render one, rerun one, or 
 
 <img src="./images/editor-flow.png" alt="Editor node flow">
 
+### Multi-Angle Camera Editor
+
+Every shot node has a built-in camera panel — no prompt engineering needed, just sliders:
+
+- **Subject facing**: forward-facing / always looking at camera
+- **Camera position**: 9-position grid (top, bottom, left, right, upper-left…)
+- **Pan / Tilt angles**: 0–360° pan, -30°~60° tilt
+- **Camera distance**: 1 m close-up → 10 m wide shot, auto-labels the shot size
+- **Interactive 3D ball**: drag the camera around the visual sphere — what you see is what you get
+
+All values are auto-written into the prompt: locked position, no pan/tilt/zoom.
+
+<img src="./images/camera-editor.png" alt="Multi-angle camera editor" width="520">
+
 ---
 
 ## 🎯 Complete Workflow
