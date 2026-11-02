@@ -1,0 +1,55 @@
+# ===== 不要打进镜像的东西 =====
+
+# 配置和密钥
+.env
+.env.*
+!.env.example
+
+# 数据库
+backend/*.db
+backend/*.db-*
+backend/*.db.bak*
+
+# 运行时产物
+backend/storage/
+backend/*.log
+backend/server_error.log
+backend/ai_*.log
+
+# Python 依赖 / 缓存
+backend/.pylibs/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/app/**/__pycache__/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pipcache/
+venv/
+.venv/
+
+# 临时调试脚本
+backend/_tmp*.py
+backend/_p.py
+backend/_run*.py
+backend/_chk*.py
+backend/*.bak*
+backend/**/*.bak*
+
+# 前端开发产物
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Git / IDE
+.git/
+.gitignore
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 文档 (开源项目文档在 GitHub 上看,不用打进镜像)
+README.md

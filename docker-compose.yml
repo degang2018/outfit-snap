@@ -1,0 +1,64 @@
+# ==============================================================================
+#  AI Outfit Video Studio — Docker Compose
+# ==============================================================================
+#
+#  1) 复制 backend/.env.example 为 backend/.env,填好 COMFY_OUTPUT_DIR 等
+#  2) ComfyUI 必须单独运行 (需要 GPU),见下方注释
+#  3) 启动:
+#       docker compose up -d --build
+#     浏览器打开 http://127.0.0.1:8000
+#
+#  4) 停止: docker compose down
+#  5) 看日志: docker compose logs -f backend
+# ==============================================================================
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: outfit-video-studio:latest
+    container_name: ovs-backend
+    restart: unless-stopped
+
+    # 后端 API + 静态前端 都走这个端口
+    ports:
+      - "8000:8000"
+
+    # 把 .env 注入容器 (也可以在下面 environment: 里直接写)
+    env_file:
+      - ./backend/.env
+
+    volumes:
+      # 运行时数据 (素材/视频/缩略图) —— 必须持久化,否则容器重建全丢
+      - backend_storage:/app/backend/storage
+
+      # SQLite 数据库 —— 单独一个卷
+      - backend_db:/app/backend/app.db
+
+      # 可选:把宿主机 ComfyUI 的 output 目录挂进去,容器内就能读到生成结果
+      # 把下面一行取消注释,改成你的实际路径
+      # - "C:/ComfyUI/ComfyUI/output:/comfy/output:ro"
+
+    # ComfyUI 跑在宿主机 (需要 GPU,容器里装不动)
+    # .env 里 COMFY_API 默认是 http://host.docker.internal:8188,这个地址在 Docker 里 = 宿主机
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+    # 日志轮转,防止磁盘写满
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+volumes:
+  backend_storage:
+  backend_db:

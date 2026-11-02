@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0a0c11" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<title>一键换装短视频</title>
+<style>
+:root{--bg:#0a0c11;--bg-2:#0e1118;--panel:#131722;--panel2:#192030;--panel-2:#192030;--panel3:#202839;
+--line:rgba(255,255,255,.07);--line-2:rgba(255,255,255,.14);
+--text:#edeff5;--text-dim:#c6cddb;--muted:#8d97aa;--faint:#69738a;
+--accent:#6c8cff;--accent2:#a06bff;--accent-2:#a06bff;--accent-soft:rgba(108,140,255,.14);
+--ok:#3fcf95;--warn:#f3b64a;--err:#f2687d;
+--r-lg:18px;--r:13px;--r-sm:10px;
+--shadow:0 14px 34px -18px rgba(0,0,0,.8);
+--shadow-lg:0 26px 60px -24px rgba(0,0,0,.88);
+--ring:0 0 0 3px rgba(108,140,255,.30);
+--topbar-h:60px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--text);
+background:
+radial-gradient(1100px 620px at 12% -12%,rgba(108,140,255,.16),transparent 60%),
+radial-gradient(900px 560px at 96% 2%,rgba(160,107,255,.12),transparent 58%),
+linear-gradient(180deg,var(--bg-2),var(--bg) 42%);
+background-attachment:fixed;
+font:14px/1.62 "Segoe UI","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:rgba(108,140,255,.35)}
+a{color:var(--accent);text-decoration:none;transition:color .15s}
+a:hover{color:#91a9ff}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.22);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+button{font:inherit;cursor:pointer;color:var(--text);padding:8px 15px;border-radius:var(--r-sm);white-space:nowrap;
+border:1px solid var(--line-2);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+transition:border-color .16s,background .16s,transform .12s,box-shadow .16s,color .16s}
+button:hover:not(:disabled){border-color:rgba(108,140,255,.55);background:var(--accent-soft)}
+button:active:not(:disabled){transform:translateY(1px)}
+button:focus-visible{outline:none;box-shadow:var(--ring)}
+button:disabled{opacity:.42;cursor:not-allowed}
+button.primary{border:none;color:#fff;font-weight:600;background:linear-gradient(135deg,var(--accent),var(--accent2));
+box-shadow:0 10px 24px -14px rgba(108,140,255,.95)}
+button.primary:hover:not(:disabled){filter:brightness(1.07)}
+button.ghost{background:transparent;border-color:transparent}
+button.ghost:hover:not(:disabled){background:rgba(255,255,255,.06);border-color:transparent}
+button.danger{color:var(--err);border-color:rgba(242,104,125,.30);background:rgba(242,104,125,.08)}
+button.danger:hover:not(:disabled){background:rgba(242,104,125,.15);border-color:rgba(242,104,125,.5)}
+button.big{padding:14px 26px;font-size:16px;border-radius:14px;width:100%}
+input[type=text],input[type=email],input[type=password]{font:inherit;color:var(--text);background:#0d1017;border:1px solid var(--line-2);
+border-radius:var(--r-sm);padding:6px 9px;width:100%;font-size:12px;transition:border-color .16s,box-shadow .16s}
+input[type=text]::placeholder,input[type=email]::placeholder,input[type=password]::placeholder{color:var(--faint)}
+input[type=text]:focus,input[type=email]:focus,input[type=password]:focus{outline:none;border-color:rgba(108,140,255,.6);box-shadow:var(--ring)}
+/* 顶栏:毛玻璃,和主应用同一套观感 */
+header.top{display:flex;align-items:center;gap:16px;padding:10px 24px;min-height:var(--topbar-h);
+border-bottom:1px solid var(--line);background:rgba(12,15,22,.74);position:sticky;top:0;z-index:20;
+backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4)}
+header.top .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+header.top .logo::before{content:"✦";width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
+font-size:14px;color:#fff;flex:none;background:linear-gradient(135deg,var(--accent),var(--accent2));
+box-shadow:0 8px 20px -10px rgba(108,140,255,.95)}
+header.top .logo a{color:var(--text)}
+header.top .logo:hover a{color:#fff}
+/* 用户菜单 */
+.user-menu{position:relative}
+.user-chip{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:999px;
+border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);cursor:pointer;
+transition:background .15s,border-color .15s;font-size:13px}
+.user-chip:hover{background:rgba(255,255,255,.06)}
+.user-chip.on{border-color:var(--accent);background:rgba(108,140,255,.1)}
+.user-chip .avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+font-size:12px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));flex:none}
+.user-chip .avatar.guest{background:linear-gradient(135deg,#64748b,#475569)}
+.user-chip .caret{font-size:9px;opacity:.6}
+.menu{position:absolute;right:0;top:calc(100% + 6px);min-width:230px;background:var(--panel);
+border:1px solid var(--line);border-radius:14px;padding:7px;box-shadow:0 18px 50px -16px rgba(0,0,0,.7);z-index:60}
+.menu-item{display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);
+padding:9px 12px;border-radius:9px;font-size:13px;cursor:pointer;transition:background .12s}
+.menu-item:hover{background:rgba(255,255,255,.06)}
+.menu-item.danger{color:var(--err)}
+.menu-item.danger:hover{background:rgba(242,104,125,.1)}
+.menu-info{padding:9px 12px 11px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);
+margin-bottom:6px;word-break:break-all;line-height:1.6}
+.menu-divider{height:1px;background:var(--line);margin:7px 5px}
+.page{max-width:900px;margin:0 auto;padding:28px 22px 96px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+.field label{font-size:12px;color:var(--muted)}
+h1{font-size:24px;line-height:1.25;margin:0 0 6px;letter-spacing:-.2px}
+.sub{color:var(--muted);margin-bottom:22px}
+.card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));
+border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 4px;font-size:16px;letter-spacing:-.1px}
+.card .hint{color:var(--muted);font-size:12px;margin-bottom:12px}
+.people{display:flex;gap:12px;flex-wrap:wrap}
+.person{width:106px;border-radius:14px;overflow:hidden;border:1px solid var(--line-2);background:#0b0d11;
+cursor:pointer;position:relative;transition:transform .16s,border-color .16s,box-shadow .16s}
+.person:hover{transform:translateY(-2px)}
+.person.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,140,255,.35)}
+.person img{width:100%;height:130px;object-fit:cover;display:block}
+.person .cap{font-size:11px;color:var(--muted);padding:5px 6px;text-align:center}
+.person.add,.thumb.add{display:flex;align-items:center;justify-content:center;border-style:dashed;
+border-color:var(--line-2);color:var(--muted);font-size:12px;text-align:center;padding:8px;cursor:pointer}
+.person.add{height:158px}
+.person.add:hover,.thumb.add:hover{border-color:rgba(108,140,255,.55);color:var(--text)}
+.thumbs{display:flex;gap:10px;flex-wrap:wrap}
+.thumb{width:100px;border-radius:14px;overflow:hidden;border:1px solid var(--line-2);background:#0b0d11;cursor:grab;
+transition:border-color .16s,box-shadow .16s}
+.thumb:hover{border-color:var(--line-2);box-shadow:var(--shadow)}
+.thumb.dragging{opacity:.35}
+.thumb .pic{position:relative;height:100px}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .x{position:absolute;top:4px;right:4px;width:20px;height:20px;line-height:17px;text-align:center;
+border-radius:50%;background:rgba(0,0,0,.7);border:1px solid var(--line-2);font-size:12px;padding:0;color:#fff}
+.thumb .x:hover{background:var(--err);border-color:var(--err)}
+.thumb .num{position:absolute;left:4px;top:4px;background:rgba(0,0,0,.75);border:1px solid var(--line-2);
+border-radius:7px;padding:0 6px;font-size:11px;line-height:18px}
+.thumb .nm{padding:6px}
+.thumb.add{width:100px;height:100px}
+/* 第 3 栏:参考图(可多张,一件一张)+ 从图里认出来的「件列表」 */
+.freshwrap{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.thumb.big{width:158px}
+.thumb.big .pic{height:158px}
+.thumb.big.dragging{opacity:.35}
+.pieces{flex:1;min-width:240px;max-width:440px;display:flex;flex-direction:column;gap:7px}
+.pieces .ptitle{color:var(--muted);font-size:12px;margin-bottom:2px}
+.prow{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);
+border-radius:11px;padding:6px 9px;cursor:grab;transition:border-color .15s}
+.prow:hover{border-color:var(--line-2)}
+.prow.dragging{opacity:.35}
+.prow .grip{color:var(--muted);font-size:13px;flex:none}
+.prow .idx{color:var(--muted);font-size:11px;min-width:14px;text-align:center;flex:none}
+.prow input{flex:1}
+.prow .close-sel{flex:none;width:118px;font-size:11.5px;padding:4px 6px;border-radius:8px}
+.prow .src{color:var(--muted);font-size:11px;flex:none}
+.prow .x2{flex:none;padding:3px 9px;font-size:12px;border-radius:8px}
+.notice{padding:12px 15px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--panel2);margin-bottom:14px}
+.notice.err{border-color:rgba(242,104,125,.35);background:rgba(242,104,125,.09);color:#ffd3d9}
+.notice.ok{border-color:rgba(63,207,149,.35);background:rgba(63,207,149,.09);color:#c6f4e0}
+.stages{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px}
+.stage{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}
+.stage .dot{width:9px;height:9px;border-radius:50%;background:var(--line-2);flex:none}
+.stage.on{color:var(--text)}
+.stage.on .dot{background:var(--warn);animation:pulse 1s ease-in-out infinite}
+.stage.done .dot{background:var(--ok)}
+@keyframes pulse{50%{opacity:.35}}
+.progress{height:8px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden}
+.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s}
+video{width:100%;border-radius:12px;background:#000;margin-top:10px}
+.row{display:flex;align-items:center;gap:10px}
+.spacer{flex:1}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.mini{padding:5px 11px;font-size:12px;border-radius:8px}
+.hintrow{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.hintrow .hint{flex:1;margin:0}
+.mask{position:fixed;inset:0;background:rgba(5,7,11,.74);backdrop-filter:blur(3px);display:flex;
+align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal{background:var(--panel);border:1px solid var(--line-2);border-radius:16px;padding:22px;
+width:min(760px,92vw);text-align:left;box-shadow:var(--shadow-lg)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.tabs button{padding:6px 13px;font-size:12.5px;border-radius:999px}
+.tabs button.on{border-color:transparent;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;max-height:52vh;overflow:auto;padding-right:4px}
+.asset{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:6px;cursor:pointer;transition:border-color .15s}
+.asset:hover{border-color:var(--line-2)}
+.asset.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,140,255,.3)}
+.asset img{width:100%;height:96px;object-fit:cover;border-radius:9px;display:block}
+.asset .an{font-size:11px;color:var(--muted);margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.asset .sys{font-size:10px;color:var(--warn)}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <span class="logo"><a href="/">衣秒成片</a></span>
+    <div class="spacer"></div>
+    <div v-if="user" class="user-menu">
+      <button class="user-chip" :class="{on: userOpen}" @click.stop="userOpen = !userOpen">
+        <span class="avatar" :class="{guest: user.is_guest}">{{ avatarText }}</span>
+        <span>{{ user.is_guest ? (user.display_name + '(游客)') : user.email }}</span>
+        <span class="caret">▼</span>
+      </button>
+      <div v-if="userOpen" class="menu" @click.stop>
+        <button class="menu-item" @click="userOpen=false;go('projects')">我的资产</button>
+        <button class="menu-item" @click="userOpen=false;go('assets')">资源管理</button>
+        <button class="menu-item" @click="userOpen=false;go('shot-mgr')">分镜管理</button>
+        <button class="menu-item" @click="userOpen=false;go('film-settings')">成片设置</button>
+        <button class="menu-item" @click="userOpen=false;go('api-settings')">接口配置</button>
+        <div class="menu-divider"></div>
+        <template v-if="user.is_guest">
+          <div class="menu-info">当前是游客身份,项目和素材绑定在本机。绑定邮箱后可以长期保存、换设备也能登录。</div>
+          <button class="menu-item" @click="openBind">绑定邮箱 / 登录已有账号</button>
+        </template>
+        <template v-else>
+          <div class="menu-info">已登录:{{ user.email }}</div>
+          <button class="menu-item danger" @click="logout">退出登录</button>
+        </template>
+      </div>
+    </div>
+  </header>
+
+  <div class="page">
+    <h1>一键换装短视频</h1>
+    <div class="sub">一件一镜：新衣服一件件从画外飘进来罩到人物身上、把身上原来的那件顶掉。照着栏目传图就行 —— ①人物图 ②初始服装（开场那套）③<b>新服装图</b>（要换上的：一件一件的平铺图）④<b>风格参考图</b>（可选，模特实穿图，没平铺图时才用）⑤换装清单（顺序 = 换装顺序）⑥常驻配饰；件名由系统读图自动认，认过的会缓存、下次不再读图。</div>
+
+    <div v-if="err" class="notice err">{{ err }}</div>
+
+    <template v-if="!running && stage !== 'done'">
+      <!-- 1. 人物 -->
+      <div class="card">
+        <h3>1. 选人物</h3>
+        <div class="hint">请传一张<b>你自己的真人参考图</b>（或在素材库里挑）：单人正面全身照、纯色背景、脸清晰。<br>内置底图排在最后，是一张多角度拼图，只用来先把流程跑通 —— 它会把碎发 / 别人的脸抄进画面，出正式片子别用它。</div>
+        <div class="people">
+          <div v-for="p in personRow" :key="p.id" class="person" :class="{on: personRef === ('asset:' + p.id)}"
+               @click="personRef = 'asset:' + p.id">
+            <img :src="p.url" :alt="p.filename" loading="lazy" decoding="async" />
+            <div class="cap">{{ p.is_system ? '系统底图' : '我的' }}</div>
+          </div>
+          <div class="person add" @click="$refs.personFile.click()">
+            <span v-if="busyPerson">上传中…</span><span v-else>＋<br>上传人物</span>
+          </div>
+          <div class="person add" @click="openLib('person')"><span>素材库<br>选人物</span></div>
+          <input ref="personFile" type="file" accept="image/*" style="display:none" @change="uploadPerson" />
+        </div>
+      </div>
+
+      <!-- 1.1 人物头像 -->
+      <div class="card">
+        <h3>1.1 人物头像</h3>
+        <div class="hint">整片<b>所有分镜</b>都用这张头像：她的脸型 / 五官 / 发型 / 发色 / 肤色以这张图为准。<br>传一张<b>正面、脸部清晰的头像或半身照</b>（可以和人物图是同一张）；不传就按人物图里的脸生成。</div>
+        <div class="thumbs" style="margin-top:10px">
+          <div v-if="headRef && headUrl" class="thumb big">
+            <div class="pic">
+              <img :src="headUrl" :alt="headName || '头像'" loading="lazy" decoding="async" />
+              <button class="x" title="移除头像" @click="clearHead">×</button>
+            </div>
+            <div class="nm muted small" style="text-align:center">{{ headName || '已选头像' }}</div>
+          </div>
+          <div class="thumb add" @click="$refs.headFile.click()">
+            <span v-if="busyHead">上传中…</span><span v-else>＋<br>上传头像</span>
+          </div>
+          <div class="thumb add" @click="openLib('head')"><span>素材库<br>选头像</span></div>
+          <input ref="headFile" type="file" accept="image/*" style="display:none" @change="uploadHead" />
+        </div>
+      </div>
+
+      <!-- 2. 初始服装 -->
+      <div class="card">
+        <h3>2. 初始服装</h3>
+        <div class="hintrow">
+          <div class="hint">这一镜开始时人物身上穿着的那套（本镜会被一件件换掉）。传它们的<b>整件平铺图</b>，<b>一张图就是一件、不拆</b>；没有就留空。<br><b>鞋也放这里</b>：开场脚上穿的旧鞋放这一栏，要换上的新鞋放第 3 栏，会自动排一镜换鞋。</div>
+          <button class="ghost mini" :disabled="!base.length" @click="reRecognize('base')">重新识别</button>
+        </div>
+        <div class="notice" v-if="sharedNote('base')" style="margin-bottom:10px">
+          {{ sharedNote('base') }} —— 请把每件的件名分别填清楚。
+        </div>
+        <div class="thumbs">
+          <div v-for="(it, i) in base" :key="it.uid" class="thumb"
+               :class="{dragging: drag && drag.group === 'base' && drag.i === i}"
+               draggable="true" @dragstart="dragStart('base', i)" @dragover.prevent
+               @drop.prevent="dragDrop('base', i)" @dragend="dragEnd">
+            <div class="pic">
+              <img :src="it.url" :alt="it.filename" loading="lazy" decoding="async" />
+              <span class="num">{{ i + 1 }}</span>
+              <button class="x" title="移除" @click="base.splice(i, 1)">×</button>
+            </div>
+            <div class="nm"><input type="text" v-model="it.name" placeholder="件名(自动识别,可改)" /></div>
+          </div>
+          <div class="thumb add" @click="$refs.baseFile.click()">
+            <span v-if="busyGroup === 'base'">识别中…</span><span v-else>＋<br>上传</span>
+          </div>
+          <div class="thumb add" @click="openLib('base')"><span>素材库<br>选图</span></div>
+          <input ref="baseFile" type="file" accept="image/*" multiple style="display:none" @change="uploadInto('base', $event)" />
+        </div>
+      </div>
+
+      <!-- 3. 新服装图 -->
+      <div class="card">
+        <h3>3. 新服装图</h3>
+        <div class="hintrow">
+          <div class="hint">每件衣服各传一张<b>白底平铺图</b>（一件一张，长短 / 花纹最准）。一张图里有多件（拼图）也会自动拆开、各给一条。</div>
+          <button class="ghost mini" :disabled="!garments.length" @click="reRecognize('garment')">重新识别</button>
+        </div>
+        <div class="thumbs">
+          <div v-for="(g, j) in garments" :key="g.uid" class="thumb big">
+            <div class="pic">
+              <img :src="g.url" :alt="g.filename" loading="lazy" decoding="async" />
+              <span class="num">{{ j + 1 }}</span>
+              <button class="x" title="移除这张图（它认出的件会一起删掉）" @click="removeImg('garment', j)">×</button>
+            </div>
+            <div class="nm muted small" style="text-align:center">衣 {{ j + 1 }} · {{ piecesOf(g.id) }} 件</div>
+          </div>
+          <div class="thumb add" @click="$refs.garmentFile.click()">
+            <span v-if="busyGroup === 'garment'">识别中…</span><span v-else>＋<br>上传</span>
+          </div>
+          <div class="thumb add" @click="openLib('garment')"><span>素材库<br>选图</span></div>
+          <input ref="garmentFile" type="file" accept="image/*" multiple style="display:none"
+                 @change="uploadFresh('garment', $event)" />
+        </div>
+      </div>
+
+      <!-- 4. 风格参考图（可选） -->
+      <div class="card">
+        <h3>4. 风格参考图（可选）</h3>
+        <div class="hintrow">
+          <div class="hint">放一张「<b>模特穿着整套</b>」的实拍图。<b>它会参与生成</b>：作为最后一张参考图挂到这一镜上，
+            提示词里自动配一句「<b>只参考它身上这套衣服的款式 / 颜色 / 穿法，绝对不要参考那个人的脸 / 身材 / 皮肤 / 姿势</b>」。
+            它<b>不占「换装清单」</b>（不会多出件来）；不放也行。<br>
+            （要换上的衣服请一律放第 3 栏的平铺图 —— 那才是"定这件衣服长什么样"的图。）</div>
+          <button class="ghost mini" :disabled="!styles.length" @click="reRecognize('style')">重新识别</button>
+        </div>
+        <div class="thumbs">
+          <div v-for="(g, j) in styles" :key="g.uid" class="thumb big">
+            <div class="pic">
+              <img :src="g.url" :alt="g.filename" loading="lazy" decoding="async" />
+              <span class="num">{{ j + 1 }}</span>
+              <button class="x" title="移除这张图（它认出的件会一起删掉）" @click="removeImg('style', j)">×</button>
+            </div>
+            <div class="nm muted small" style="text-align:center">风格参考图 {{ j + 1 }}</div>
+          </div>
+          <div class="thumb add" @click="$refs.styleFile.click()">
+            <span v-if="busyGroup === 'style'">识别中…</span><span v-else>＋<br>上传</span>
+          </div>
+          <div class="thumb add" @click="openLib('style')"><span>素材库<br>选图</span></div>
+          <input ref="styleFile" type="file" accept="image/*" multiple style="display:none"
+                 @change="uploadFresh('style', $event)" />
+        </div>
+      </div>
+
+      <!-- 5. 换装清单 -->
+      <div class="card">
+        <h3>5. 换装清单</h3>
+        <div class="hint">顺序 = 换装顺序，拖动可调；点 × 删掉不要的。这里**只有第 3 栏「新服装图」的平铺图认出来的件**（行尾的「衣 N」= 来自第 3 栏第 N 张图）。</div>
+        <div class="pieces" style="max-width:none">
+          <div v-for="(p, i) in pieces" :key="p.uid" class="prow"
+               :class="{dragging: drag && drag.group === 'pieces' && drag.i === i}"
+               @dragover.prevent @drop.prevent="dragDrop('pieces', i)">
+            <span class="grip" draggable="true" title="按住拖动排序"
+                  @dragstart="dragStart('pieces', i)" @dragend="dragEnd">⠿</span>
+            <span class="idx">{{ i + 1 }}</span>
+            <input type="text" v-model="p.name" placeholder="件名(自动识别,可改)" />
+            <select v-model="p.close" class="close-sel"
+                    title="这件在本项目里的开合(空 = 跟着素材库 / 全局默认):上衣扣子、外套拉链要不要合上">
+              <option value="">开合:自动</option>
+              <option value="closed">扣上 / 拉满</option>
+              <option value="half">半开</option>
+              <option value="open">敞开</option>
+            </select>
+            <span class="src">{{ srcLabel(p) }}</span>
+            <button class="x2" title="删掉这件" @click="pieces.splice(i, 1)">×</button>
+          </div>
+          <div v-if="!pieces.length" class="muted small">还没有要换上的衣服 —— 上面第 3 栏传平铺图，或点下面「手动加一件」自己填件名。</div>
+          <button class="ghost mini" style="align-self:flex-start" @click="addPiece">＋ 手动加一件</button>
+        </div>
+      </div>
+
+      <!-- 6. 常驻配饰 -->
+      <div class="card">
+        <h3>6. 常驻配饰</h3>
+        <div class="hintrow">
+          <div class="hint">全程戴在人物身上、不换的小件（墨镜 / 项链 / 帽子…）。<b>一张图就是一件、不拆</b>；没有就留空。<br><b>鞋不放这里</b>：开场脚上那双鞋放「初始服装」，要换上的新鞋放「要换上的」，换鞋会自动排一镜。</div>
+          <button class="ghost mini" :disabled="!acc.length" @click="reRecognize('acc')">重新识别</button>
+        </div>
+        <div class="notice" v-if="sharedNote('acc')" style="margin-bottom:10px">
+          {{ sharedNote('acc') }} —— 请把每件的件名分别填清楚。
+        </div>
+        <div class="thumbs">
+          <div v-for="(it, i) in acc" :key="it.uid" class="thumb"
+               :class="{dragging: drag && drag.group === 'acc' && drag.i === i}"
+               draggable="true" @dragstart="dragStart('acc', i)" @dragover.prevent
+               @drop.prevent="dragDrop('acc', i)" @dragend="dragEnd">
+            <div class="pic">
+              <img :src="it.url" :alt="it.filename" loading="lazy" decoding="async" />
+              <span class="num">{{ i + 1 }}</span>
+              <button class="x" title="移除" @click="acc.splice(i, 1)">×</button>
+            </div>
+            <div class="nm"><input type="text" v-model="it.name" placeholder="件名(自动识别,可改)" /></div>
+          </div>
+          <div class="thumb add" @click="$refs.accFile.click()">
+            <span v-if="busyGroup === 'acc'">识别中…</span><span v-else>＋<br>上传</span>
+          </div>
+          <div class="thumb add" @click="openLib('acc')"><span>素材库<br>选图</span></div>
+          <input ref="accFile" type="file" accept="image/*" multiple style="display:none" @change="uploadInto('acc', $event)" />
+        </div>
+      </div>
+
+      <!-- 7. 通用分镜（可选） -->
+      <div class="card">
+        <h3>7. 通用分镜（可选）</h3>
+        <div class="hintrow">
+          <div class="hint">勾上的会<b>接在换装镜后面</b>一起建进同一个工程（渲完自动拼成一条片子）。
+            每个默认 2.3 秒，建完可以在编辑器里逐镜改时长 / 提示词。<br>
+            想把自己的镜头存进来：打开项目 → 选中那一镜 → 点「<b>存为通用分镜</b>」，它就出现在这里。</div>
+          <button class="ghost mini" :disabled="!shotLib.length || pickedShots.length >= shotLib.length"
+                  @click="selectAllShots">全选</button>
+          <button class="ghost mini" :disabled="!pickedShots.length" @click="pickedShots = []">清空</button>
+        </div>
+        <div class="pieces" style="max-width:none">
+          <div v-for="it in shotLib" :key="it.key" class="prow" @click="toggleShot(it.key)"
+               :style="{borderColor: pickedShots.includes(it.key) ? 'var(--accent)' : ''}">
+            <span class="grip" style="cursor:pointer">{{ pickedShots.includes(it.key) ? '✓' : '＋' }}</span>
+            <input type="text" :value="it.label" disabled style="opacity:.9;cursor:pointer" />
+            <span class="src" v-if="pickedShots.includes(it.key)">第 {{ pickedShots.indexOf(it.key) + 2 }} 镜</span>
+          </div>
+          <div v-if="!shotLib.length" class="muted small">镜头库是空的。</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>8. 换装风格</h3>
+        <div class="hintrow">
+          <div class="hint">决定「换装镜」里衣服怎么上身。<b>建项目时就写进提示词</b>，想换风格要重新建项目。</div>
+        </div>
+        <div class="pieces" style="max-width:none">
+          <div class="prow" @click="pieceStyle = 'throw'"
+               :style="{borderColor: pieceStyle === 'throw' ? 'var(--accent)' : ''}">
+            <span class="grip" style="cursor:pointer">{{ pieceStyle === 'throw' ? '✓' : '＋' }}</span>
+            <input type="text" value="扔过来飞入（默认）" disabled style="opacity:.9;cursor:pointer" />
+            <span class="src">画外有人把衣服朝她扔过来，碰到身体就穿好</span>
+          </div>
+          <div class="prow" @click="pieceStyle = 'static'"
+               :style="{borderColor: pieceStyle === 'static' ? 'var(--accent)' : ''}">
+            <span class="grip" style="cursor:pointer">{{ pieceStyle === 'static' ? '✓' : '＋' }}</span>
+            <input type="text" value="普通（静态图）" disabled style="opacity:.9;cursor:pointer" />
+            <span class="src">逐件换装：每件依次穿上，过程中每件生成一张静态图，最后输出一张穿好整套衣服的静态成片图</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="primary big" :disabled="!canStart || busy" @click="startPieces">
+        {{ busy ? '正在准备…' : '开始生成' }}
+      </button>
+      <div class="muted small" style="text-align:center;margin-top:8px">
+        需选一位人物 + 至少 1 张「要换上的新衣服」（第 3 栏）
+        <template v-if="pickedShots.length">
+          ｜已勾 {{ pickedShots.length }} 个通用分镜 → 共 <b>{{ pickedShots.length + 1 }}</b> 镜
+        </template>
+      </div>
+      <div class="muted small" style="text-align:center;margin-top:4px">
+        一件一镜：第 2 栏当**开场就穿着的旧件**（会把它们的图一起带进去），
+        第 3 栏的每件各占一镜，最后加一个展示镜。
+      </div>
+    </template>
+
+    <!-- 运行中 / 完成 -->
+    <div v-if="running || stage === 'done'">
+      <div class="card">
+        <div class="stages">
+          <div v-for="s in stages" :key="s.k" class="stage"
+               :class="{on: stage === s.k, done: stageDone(s.k)}">
+            <span class="dot"></span><span>{{ s.t }}</span>
+          </div>
+        </div>
+        <div class="progress" style="margin-bottom:8px"><i :style="{width: progress + '%'}"></i></div>
+        <div class="muted small">{{ jobMsg || '准备中…' }}</div>
+      </div>
+
+      <div v-if="stage === 'done' && finalUrl" class="card">
+        <h3>成片</h3>
+        <img v-if="isImageUrl(finalUrl)" :src="finalUrl" style="max-width:100%;border-radius:12px;display:block" />
+        <video v-else :src="finalUrl" controls playsinline></video>
+        <div class="row" style="margin-top:12px">
+          <a :href="finalUrl" download><button class="primary">{{ isImageUrl(finalUrl) ? '下载图片' : '下载视频' }}</button></a>
+          <button @click="openEditor">去编辑器微调</button>
+          <div class="spacer"></div>
+          <button @click="reset">再做一个</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 素材库选图 -->
+  <div v-if="picker" class="mask" @click.self="picker = null">
+    <div class="modal">
+      <h3 style="margin:0 0 12px">从素材库选（{{ libTitle }}）</h3>
+      <div class="tabs">
+        <button v-for="c in libCats" :key="c.k" :class="{on: picker.tab === c.k}"
+                @click="picker.tab = c.k">{{ c.t }}</button>
+        <div class="spacer"></div>
+        <button @click="$refs.libFile.click()">上传新图</button>
+        <input ref="libFile" type="file" accept="image/*" multiple style="display:none" @change="libUpload" />
+      </div>
+      <div class="lib">
+        <div v-for="a in libShown" :key="a.id" class="asset" :class="{on: picker.sel.includes(a.id)}"
+             @click="toggleLib(a.id)">
+          <img :src="a.url" :alt="a.filename" loading="lazy" decoding="async" />
+          <div class="an"><b v-if="a.ai_name">{{ a.ai_name }}</b><span v-else>{{ a.filename }}</span>
+            <span v-if="a.is_system" class="sys">内置</span>
+            <span v-if="a.ai_more && a.ai_more.length" class="sys">+{{ a.ai_more.length }}件</span></div>
+        </div>
+        <div v-if="!libShown.length" class="muted small">这个分类里还没有图，点右上「上传新图」加一张。</div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <span class="muted small">{{ (picker.target === 'person' || picker.target === 'head') ? '只能选 1 张' : ('已选 ' + picker.sel.length + ' 张') }}</span>
+        <div class="spacer"></div>
+        <button @click="picker = null">取消</button>
+        <button class="primary" :disabled="!picker.sel.length" @click="confirmLib">
+          {{ (picker.target === 'person' || picker.target === 'head') ? '选这个' : '加进来' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 绑定邮箱 / 登录 -->
+  <div v-if="showBind" class="mask" @click.self="showBind = false">
+    <div class="modal">
+      <h3 style="margin-top:0">绑定邮箱</h3>
+      <p class="small muted">绑定后账号可长期保存,当前的项目和素材会自动保留。</p>
+      <div class="field"><label>邮箱</label>
+        <input v-model="bind.email" type="email" inputmode="email" autocomplete="username" placeholder="you@example.com" /></div>
+      <div class="field"><label>密码(至少 6 位)</label>
+        <input v-model="bind.password" type="password" autocomplete="current-password" /></div>
+      <div class="row">
+        <button class="primary" @click="doBind">绑定</button>
+        <span class="spacer"></span><button class="ghost" @click="showBind = false">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/vendor/vue.global.prod.js"></script>
+<script>
+const { createApp } = Vue;
+const TOKEN_KEY = 'ovs_token';
+
+async function req(path, opts = {}) {
+  const headers = {};
+  const t = localStorage.getItem(TOKEN_KEY);
+  if (t) headers.Authorization = 'Bearer ' + t;
+  let body;
+  if (opts.form) body = opts.form;
+  else if (opts.body !== undefined) { headers['Content-Type'] = 'application/json'; body = JSON.stringify(opts.body); }
+  const res = await fetch(path, { method: opts.method || 'GET', headers, body });
+  if (res.status === 204) return null;
+  const data = await res.json().catch(() => null);
+  if (!res.ok) {
+    const d = data && data.detail;
+    throw new Error(typeof d === 'string' ? d : Array.isArray(d) ? d.map(x => x.msg).join('; ') : res.statusText);
+  }
+  return data;
+}
+
+createApp({
+  data() {
+    return {
+      user: null, err: '',
+      userOpen: false, showBind: false, bind: { email: '', password: '' },
+      people: [], personRef: '',
+      // 人物头像(整片统一):headRef = 'asset:123',每个分镜都挂这张图锁头部
+      headRef: '', headUrl: '', headName: '', busyHead: false,
+      base: [], garments: [], styles: [], pieces: [], acc: [], drag: null, uidSeq: 1,
+      // 换装风格:throw = 画外扔过来飞入;static = 逐件静态图
+      pieceStyle: 'throw',
+      // 「通用分镜」= 镜头库(内置细节镜 + 你自建的)。勾上的会接在换装镜后面一起建进同一工程。
+      shotLib: [], pickedShots: [],
+      picker: null, allAssets: [],
+      libCats: [
+        { k: 'character', t: '人物' },
+        { k: 'prop', t: '道具' },
+        { k: 'wear_ref', t: '实拍参考图' },
+      ],
+      busyPerson: false, busy: false, busyGroup: '', running: false,
+      stage: '', progress: 0, jobMsg: '',
+      projectId: null, finalUrl: '',
+      stages: [
+        { k: 'read',  t: '读图认件 —— 认出每张图是哪一件' },
+        { k: 'build', t: '生成提示词 —— 编排换装顺序与动作' },
+        { k: 'render',t: '渲染 —— 生成这一镜并合成' },
+      ],
+    };
+  },
+  computed: {
+    canStart() { return !!this.personRef && this.pieces.length > 0; },
+    avatarText() {
+      const u = this.user;
+      if (!u) return '';
+      const s = (u.is_guest ? (u.display_name || '游') : (u.email || 'U')).trim();
+      return s.slice(0, 1).toUpperCase();
+    },
+    /** 人物候选:内置底图排在前面,你自己的真人参考图跟在后面(接口已按 内置优先 排序) */
+    personRow() { return this.people; },
+    libShown() {
+      return this.picker ? this.allAssets.filter(a => a.category === this.picker.tab) : [];
+    },
+    libTitle() {
+      return ({ person: '人物', base: '初始服装', garment: '新服装图',
+                style: '风格参考图', acc: '常驻配饰' })[this.picker ? this.picker.target : ''] || '';
+    },
+  },
+  async created() {
+    try {
+      let me = null;
+      try { me = await req('/api/auth/me'); } catch (e) { me = null; }
+      if (!me) {
+        const g = await req('/api/auth/guest', { method: 'POST' });
+        localStorage.setItem(TOKEN_KEY, g.access_token);
+        me = g.user;
+      }
+      this.user = me;
+      const all = await req('/api/assets?category=character');
+      this.people = all;
+      // 人物不预选:让用户自己传/自己挑(内置那张是多角度拼图,只当兜底选项)
+      try {
+        const lib = await req('/api/shots');
+        this.shotLib = ((lib && lib.library) || []).filter(it => (it.action || '').trim());
+      } catch (e) { this.shotLib = []; }
+    } catch (e) { this.err = e.message }
+  },
+  mounted() {
+    document.addEventListener('click', () => { this.userOpen = false });
+  },
+  methods: {
+    go(v) {
+      // 跳回主页并通过 sessionStorage 传递目标视图
+      sessionStorage.setItem('ovs_goto', v);
+      location.href = '/';
+    },
+    openBind() {
+      this.userOpen = false;
+      this.bind.email = ''; this.bind.password = '';
+      this.showBind = true;
+    },
+    async doBind() {
+      try {
+        const r = await req('/api/auth/bind', { method: 'POST', body: { email: this.bind.email, password: this.bind.password } });
+        localStorage.setItem(TOKEN_KEY, r.access_token);
+        this.user = r.user;
+        this.showBind = false;
+        this.err = '';
+      } catch (e) { this.err = e.message; }
+    },
+    logout() {
+      this.userOpen = false;
+      if (!confirm('退出登录?退出后会以新的游客身份进入;原账号可以随时用邮箱重新登录。')) return;
+      localStorage.removeItem(TOKEN_KEY);
+      this.user = null;
+      location.reload();
+    },
+    stageDone(k) {
+      const order = this.stages.map(s => s.k);
+      return this.stage === 'done' || order.indexOf(k) < order.indexOf(this.stage);
+    },
+    /** 同一栏里有没有两件共用同一张参考图(拼图那种) —— 读图认不出拼图里的单件,得手填件名 */
+    sharedNote(group) {
+      const arr = this[group] || [];
+      const seen = {}, dup = [];
+      arr.forEach((it, i) => {
+        if (seen[it.id] !== undefined) dup.push(`${seen[it.id] + 1}、${i + 1}`);
+        else seen[it.id] = i;
+      });
+      return dup.length ? `第 ${dup.join('、')} 张用的是同一张参考图` : '';
+    },
+    async _upload(file, category) {
+      const form = new FormData();
+      form.append('file', file);
+      form.append('category', category);
+      return await req('/api/assets', { method: 'POST', form });
+    },
+    /** 素材 → 条目:一图一件(第 2 / 4 栏用)。已有读图缓存的话直接带上件名/描述,不用等模型 */
+    mkItem(a) {
+      return { uid: this.uidSeq++, id: a.id, url: a.url, filename: a.filename,
+               name: a.ai_name || '', desc: a.ai_desc || '', kind: a.ai_kind || '' };
+    },
+    upsertAsset(a) {
+      const j = this.allAssets.findIndex(x => x.id === a.id);
+      if (j >= 0) this.allAssets.splice(j, 1, a); else this.allAssets.unshift(a);
+    },
+    /** 这个件名像不像「戴在身上的小配件」(墨镜 / 项链 / 帽 / 包…) —— 和后端
+     *  script_split.is_worn_accessory / WORN_ACCESSORY_HINTS 同一套词,前端先拦一道。
+     *  风格参考图里那个模特身上的这类东西,不属于「要换上的那套」,一律不要。
+     *  **鞋不算配件**(2026-10-20):鞋现在要单独排「穿好展示 + 飞入换装」两镜 ——
+     *  以前它被这道过滤剔掉,选一双鞋进来会只剩一条**空件名**的行(用户报「这里没有数据」)。 */
+    isAccessoryPiece(it) {
+      const k = it.kind || '';
+      if (k === '配饰' || k === '帽' || k === '包') return true;
+      const n = (it.name || '') + k;
+      const keys = ['墨镜', '太阳镜', '眼镜', '镜框', '项链', '耳环', '耳钉', '耳饰', '戒指',
+        '手链', '手镯', '手表', '腕表', '帽', '围巾', '丝巾', '腰带', '皮带', '发夹', '发卡',
+        '发箍', '头饰', '胸针', '领带', '领结', '手套',
+        '背包', '手包', '挎包', '手提包', '腰包', '包袋'];
+      return keys.some(x => n.includes(x));
+    },
+    /** 第 3 栏:按每张参考图的读图结果,生成「这一套里有哪几件」的件列表。
+     *  一件一张图 → 每张图给一件;一张「模特穿着整套」的图 → 拆成多件(共用这张图)。
+     *  参考图那个模特身上的配饰一律剔掉。 */
+    piecesFrom(a) {
+      const rows = [];
+      const push = (nm, ds, kd) => {
+        const it = { uid: this.uidSeq++, id: a.id, name: nm || '', desc: ds || '', kind: kd || '',
+                     close: a.ai_close || '' };   // 开合:默认跟着素材库里的设置
+        if (!this.isAccessoryPiece(it)) rows.push(it);
+      };
+      push(a.ai_name, a.ai_desc, a.ai_kind);
+      for (const m of (a.ai_more || [])) push(m.name, m.desc, m.kind);
+      // 一件都没剩下(比如整张图只认出一条项链)→ 先给一条空行让用户自己填
+      if (!rows.length) rows.push({ uid: this.uidSeq++, id: a.id, name: '', desc: '', kind: '', close: '' });
+      return rows;
+    },
+    /** 跨栏去重:同一张图 + 同一个件名只保留最早出现的那一条 —— 免得提交时撞出「靴6 / 短裙5」这种重名 */
+    dedupeAll() {
+      const seen = new Set();
+      const clean = (arr) => {
+        const out = [];
+        for (const it of arr) {
+          const nm = (it.name || '').trim();
+          if (!nm) { out.push(it); continue }        // 还没认出来,判不了重 → 保留
+          const key = it.id + '|' + nm;
+          if (seen.has(key)) continue;
+          seen.add(key); out.push(it);
+        }
+        return out;
+      };
+      this.base = clean(this.base);
+      this.pieces = clean(this.pieces);
+      this.acc = clean(this.acc);
+    },
+    /** 手动加一件:挂在第一张「新服装图」平铺图下(还没有图就先建一条空的,件名自己填) */
+    addPiece() {
+      if (this.pieces.length >= 8) { this.err = '最多 8 件'; return }
+      this.pieces.push({ uid: this.uidSeq++, id: this.garments.length ? this.garments[0].id : 0,
+                         from: 'garment', name: '', desc: '', kind: '', close: '' });
+    },
+    /** 这张图认出了几件(图下面标「N 件」用) */
+    piecesOf(id) { return this.pieces.filter(p => p.id === id).length },
+    /** 这件是哪个栏目的第几张图来的(行尾标签) */
+    srcLabel(p) {
+      const arr = p.from === 'style' ? this.styles : this.garments;
+      const j = arr.findIndex(g => g.id === p.id);
+      return (p.from === 'style' ? '风格 ' : '衣 ') + (j >= 0 ? String(j + 1) : '?');
+    },
+    /** 收一张参考图:to='garment' 进第 3 栏「新服装图」(会产生「要换上的」件);
+     *  to='style' 进第 4 栏「风格参考图」—— **只作参考,不产生件、不进「换装清单」**。 */
+    async addFreshAsset(a, to) {
+      const arr = to === 'style' ? this.styles : this.garments;
+      if (arr.some(g => g.id === a.id)) return;
+      if (arr.length >= 8) { this.err = '最多 8 张图'; return }
+      let asset = a;
+      if (!(asset.ai_name || '').trim()) {           // 认过就用缓存,不再调模型
+        const rows = await req('/api/assets/recognize', { method: 'POST', body: { ids: [a.id] } });
+        if (rows && rows[0]) asset = rows[0];
+      }
+      this.upsertAsset(asset);
+      arr.push({ uid: this.uidSeq++, id: asset.id, url: asset.url, filename: asset.filename });
+      if (to === 'style') return;                    // ← 风格参考图到此为止,不出件
+      for (const p of this.piecesFrom(asset)) {
+        if (this.pieces.length >= 8) break;
+        p.from = 'garment';
+        this.pieces.push(p);
+      }
+    },
+    /** 删掉某栏目里第 j 张图,连同它认出的那几件 */
+    removeImg(from, j) {
+      const arr = from === 'style' ? this.styles : this.garments;
+      const g = arr[j];
+      if (!g) return;
+      arr.splice(j, 1);
+      this.pieces = this.pieces.filter(p => p.id !== g.id);
+    },
+    /** 勾 / 取消一个「通用分镜」(勾选顺序 = 它们在片子里的先后) */
+    toggleShot(key) {
+      const i = this.pickedShots.indexOf(key);
+      if (i >= 0) this.pickedShots.splice(i, 1);
+      else this.pickedShots.push(key);
+    },
+    /** 通用分镜一键全选:按镜头库里的顺序勾上(勾选顺序 = 它们在片子里的先后) */
+    selectAllShots() {
+      const keys = (this.shotLib || []).map(it => it.key).filter(Boolean);
+      if (!keys.length) { this.err = '镜头库是空的'; return }
+      this.err = '';
+      this.pickedShots = keys;
+    },
+    async uploadFresh(from, ev) {
+      const files = Array.from(ev.target.files || []); ev.target.value = '';
+      if (!files.length) return;
+      this.err = ''; this.busy = true; this.busyGroup = from;
+      try {
+        for (const f of files) {                     // 可以一次多选
+          const a = await this._upload(f, from === 'style' ? 'wear_ref' : 'prop');
+          await this.addFreshAsset(a, from);
+        }
+      } catch (e) { this.err = e.message } finally { this.busy = false; this.busyGroup = '' }
+    },
+    async uploadPerson(ev) {
+      const f = ev.target.files && ev.target.files[0]; ev.target.value = '';
+      if (!f) return;
+      this.err = ''; this.busyPerson = true;
+      try {
+        const a = await this._upload(f, 'character');
+        this.people = [a, ...this.people];
+        this.personRef = 'asset:' + a.id;
+      } catch (e) { this.err = e.message } finally { this.busyPerson = false }
+    },
+    /** 人物头像:整片每个分镜都挂这张图当头部参考 */
+    async uploadHead(ev) {
+      const f = ev.target.files && ev.target.files[0]; ev.target.value = '';
+      if (!f) return;
+      this.err = ''; this.busyHead = true;
+      try {
+        const a = await this._upload(f, 'character');
+        this.headRef = 'asset:' + a.id;
+        this.headUrl = a.url;
+        this.headName = a.ai_name || a.filename || '';
+      } catch (e) { this.err = e.message } finally { this.busyHead = false }
+    },
+    clearHead() {
+      this.headRef = ''; this.headUrl = ''; this.headName = '';
+    },
+    /** 第 2 / 4 栏:一图一件,不拆 */
+    async uploadInto(group, ev) {
+      const files = Array.from(ev.target.files || []); ev.target.value = '';
+      if (!files.length) return;
+      this.err = ''; this.busy = true; this.busyGroup = group;
+      try {
+        const arr = this[group];
+        const added = [];
+        for (const f of files) {
+          if (arr.length >= 8) { this.err = '最多 8 张图'; break }
+          const a = await this._upload(f, 'prop');
+          this.upsertAsset(a);
+          const it = this.mkItem(a);
+          arr.push(it); added.push(it);
+        }
+        if (added.length) await this.recognize(added);   // 传完顺手认一遍(认完缓存,下次不再读图)
+      } catch (e) { this.err = e.message } finally { this.busy = false; this.busyGroup = '' }
+    },
+
+    /* ---------- 拖拽调整顺序(顺序 = 图 1、图 2…) ---------- */
+    dragStart(group, i) { this.drag = { group, i } },
+    dragEnd() { this.drag = null },
+    dragDrop(group, i) {
+      const d = this.drag;
+      this.drag = null;
+      if (!d || d.group !== group || d.i === i) return;
+      const arr = this[group];
+      const [moved] = arr.splice(d.i, 1);
+      arr.splice(i, 0, moved);
+    },
+
+    /* ---------- 从素材库选图 ---------- */
+    async openLib(target) {
+      this.err = '';
+      try { this.allAssets = await req('/api/assets'); } catch (e) { this.err = e.message }
+      // 已经选过的预先勾上;人物只能选一张,其余是一栏多张
+      let sel = [];
+      if (target === 'person') {
+        const s = this.personRef || '';
+        sel = s.startsWith('asset:') ? [Number(s.slice(6))] : [];
+      } else if (target === 'head') {
+        const s = this.headRef || '';
+        sel = s.startsWith('asset:') ? [Number(s.slice(6))] : [];
+      } else if (target === 'garment') {
+        sel = this.garments.map(g => g.id);
+      } else if (target === 'style') {
+        sel = this.styles.map(g => g.id);
+      } else {
+        sel = (this[target] || []).map(x => x.id);
+      }
+      // 默认停在合适的分页:风格参考图 → 实拍参考图;其它 → 道具
+      const tab = target === 'person' ? 'character'
+                  : (target === 'head' ? 'character'
+                  : (target === 'style' ? 'wear_ref' : 'prop'));
+      this.picker = { target, tab, sel };
+    },
+    toggleLib(id) {
+      // 人物 / 头像只能选一个;第 3 栏可多选(一张图一件)
+      if (this.picker.target === 'person' || this.picker.target === 'head') {
+        this.picker.sel = [id]; return;
+      }
+      const i = this.picker.sel.indexOf(id);
+      if (i >= 0) this.picker.sel.splice(i, 1); else this.picker.sel.push(id);
+    },
+    async confirmLib() {
+      const target = this.picker.target;
+      if (target === 'person') {
+        const a = this.allAssets.find(x => x.id === this.picker.sel[0]);
+        if (a) this.personRef = 'asset:' + a.id;
+        this.picker = null;
+        return;
+      }
+      if (target === 'head') {
+        const a = this.allAssets.find(x => x.id === this.picker.sel[0]);
+        if (a) {
+          this.headRef = 'asset:' + a.id;
+          this.headUrl = a.url;
+          this.headName = a.ai_name || a.filename || '';
+        }
+        this.picker = null;
+        return;
+      }
+      if (target === 'garment' || target === 'style') {   // 可多张:每张图各自认件
+        const ids = this.picker.sel.slice();
+        this.picker = null;
+        this.busy = true;
+        try {
+          for (const id of ids) {
+            const a = this.allAssets.find(x => x.id === id);
+            if (a) await this.addFreshAsset(a, target);
+          }
+        } catch (e) { this.err = e.message }
+        finally { this.busy = false }
+        return;
+      }
+      const arr = this[target];
+      const added = [];
+      for (const id of this.picker.sel) {
+        if (arr.length >= 8) { this.err = '一栏最多 8 张图'; break }
+        const a = this.allAssets.find(x => x.id === id);
+        if (!a || arr.some(x => x.id === a.id)) continue;
+        const it = this.mkItem(a);                    // 一图一件
+        arr.push(it); added.push(it);
+      }
+      this.picker = null;
+      if (added.length) {                             // 还没认过件的,顺手认一遍
+        this.busy = true;
+        try { await this.recognize(added) }
+        catch (e) { this.err = e.message }
+        finally { this.busy = false }
+      }
+    },
+    async libUpload(ev) {
+      const files = Array.from(ev.target.files || []); ev.target.value = '';
+      if (!files.length || !this.picker) return;
+      try {
+        const added = [];
+        for (const f of files) {
+          const a = await this._upload(f, this.picker.tab);
+          this.allAssets = [a, ...this.allAssets];
+          if (!this.picker.sel.includes(a.id)) this.picker.sel.push(a.id);
+          added.push(a);
+        }
+        // 是服装就顺手认一遍(缓存起来),弹窗里立刻能看到件名而不是文件名
+        const props = added.filter(a => a.category !== 'character' && a.category !== 'scene');
+        if (props.length) {
+          const rows = await req('/api/assets/recognize',
+            { method: 'POST', body: { ids: props.map(a => a.id) } });
+          for (const r of rows) {
+            const j = this.allAssets.findIndex(x => x.id === r.id);
+            if (j >= 0) this.allAssets.splice(j, 1, r); else this.allAssets.unshift(r);
+          }
+        }
+      } catch (e) { this.err = e.message }
+    },
+
+    /** 读图认件:只对「还没有件名」的图批量认一次,结果会缓存在素材上(下次直接用,不再调模型)。
+     *  force=true 时强制重认(认错了手动点「重新识别」)。 */
+    async recognize(items, force = false) {
+      const arr = (items || []).filter(x => x && x.id);
+      const ids = [...new Set(arr.filter(x => force || !x.name).map(x => x.id))];
+      if (!ids.length) return 0;
+      const rows = await req('/api/assets/recognize', { method: 'POST', body: { ids, force } });
+      const byId = {};
+      for (const r of rows) {
+        byId[r.id] = r;
+        const j = this.allAssets.findIndex(x => x.id === r.id);
+        if (j >= 0) this.allAssets.splice(j, 1, r); else this.allAssets.unshift(r);
+      }
+      let n = 0;
+      for (const it of arr) {
+        const r = byId[it.id];
+        if (!r) continue;
+        if (!it.name && r.ai_name) { it.name = r.ai_name; n++ }
+        if (!it.desc && r.ai_desc) it.desc = r.ai_desc;
+        // 「部位」一律以最新一次读图为准(**不是**只在空的时候填):识别词表变细之后,
+        // 老条目上那个粗槽位(上装 / 配饰)会把新的细分槽位(外套 / 整身 / 眼镜)挡住。
+        if (r.ai_kind) it.kind = r.ai_kind;
+      }
+      return n;
+    },
+    async reRecognize(group) {
+      this.err = '';
+      try {
+        if (group === 'garment' || group === 'style') {   // 重认该栏的图
+          const list = group === 'style' ? this.styles : this.garments;
+          if (!list.length) return;
+          const ids = list.map(g => g.id);
+          const rows = await req('/api/assets/recognize',
+            { method: 'POST', body: { ids, force: true } });
+          const byId = {};
+          for (const r of (rows || [])) { byId[r.id] = r; this.upsertAsset(r) }
+          if (group === 'style') return;             // 风格参考图不出件
+          const out = [];                            // 件列表只由第 3 栏的平铺图重建
+          for (const g of this.garments) {
+            const a = byId[g.id] || this.allAssets.find(x => x.id === g.id);
+            if (!a) continue;
+            for (const p of this.piecesFrom(a)) {
+              if (out.length < 8) { p.from = 'garment'; out.push(p) }
+            }
+          }
+          this.pieces = out;
+          return;
+        }
+        await this.recognize(this[group], true);
+      } catch (e) { this.err = e.message }
+    },
+
+    /** 「开始生成」:一件一镜(换装镜一件一件拆成多镜,且**旧件自带图**)。
+     *  第 2 栏(初始服装)= 她开场穿着的旧件 → 当 base_items 传下去(建项目时会强制进每一镜:
+     *  参考图 + <Prop> 定义「她现在就穿着、本镜会被换掉」)。 */
+    async startPieces() {
+      this.err = ''; this.busy = true; this.running = true;
+      this.projectId = null; this.finalUrl = ''; this.progress = 0;
+      try {
+        this.stage = 'read'; this.jobMsg = '正在认件（没认过的图会自动读一次）…';
+        await this.recognize([...this.base, ...this.acc, ...this.pieces]);
+        this.dedupeAll();
+        if (!this.pieces.length) {
+          throw new Error('第 3 栏「要换上的」至少要有一件衣服（传参考图或手动加一件）');
+        }
+        const pack = (arr) => arr.map(x => ({ ref: 'asset:' + x.id, name: x.name || '', desc: x.desc || '' }));
+        const baseNames = this.base.map(x => x.name).filter(Boolean);
+        const pieceRows = [...this.pieces, ...this.acc].filter(x => x.name);
+        // 常驻配饰也塞进 parts:后端靠它认出「戴在身上、不单独排镜」的那几件,
+        // 开场状态镜才会写上墨镜 / 拖鞋(少了它,后面几镜靠上一镜末帧延续就一路都没有)。
+        const partNames = pieceRows.map(x => x.name);
+        // 「部位」(读图给的 slot)和件名**一一对应**传下去:后端靠它定穿戴顺序、判"这一件会顶掉哪件旧件"
+        // (件名是开放词表 —— 雪服 / 汉服 / 内搭 / T恤 靠字猜必然漏)。
+        const partKinds = pieceRows.map(x => x.kind || '');
+        const baseTxt = baseNames.join(' + ');
+        const desc = this.pieces.map(x => x.desc).filter(Boolean).join(' + ');
+        // 镜数按新结构算:**1 镜「打底整套」展示**(有打底时)+ **每件 2 镜** ——
+        // 每件前面先来一镜「这件换好之后的样子」(它的末帧会落成状态图,给换装镜当尾帧锚),
+        // 然后才是换装镜。写小了分析器会把几条合并掉,结构就散了。
+        //
+        // **勾选的「通用分镜」也要算进去**:draft-script 会把它们接在换装镜后面写成内容清单里的几行,
+        // 而 analyze-script 是按 shot_count 切分镜的 —— 少算它们,分析器就会把这几行
+        // 合并 / 丢掉(实测:勾了细节镜,建出来的项目「分镜详情」里一个都没有)。
+        const nDetail = this.pickedShots.length;
+        // 静态图 = 一件一镜(每件只产一张 PNG,不需要展示镜 + 换装镜两镜一组);
+        // 扔过来飞入 = 每件 2 镜(展示 + 换装)。
+        // 静态风格只排「一件一镜」的静态图;细节镜(通用分镜)后面在编辑器里自己加,
+        // 加了会自动拿最后那张静态图当穿着样式参照(见 pipeline._style_ref_for)。
+        const n = this.pieceStyle === 'static'
+          ? pieceRows.length
+          : ((baseNames.length ? 1 : 0) + this.pieces.length * 2) + nDetail;
+        const secs = +(2.5 * n).toFixed(1);
+        this.stage = 'build'; this.jobMsg = '正在编排按件换装顺序、生成提示词…';
+        // 1) 出剧本(按件版)
+        const d = await req('/api/projects/draft-script', {
+          method: 'POST',
+          body: {
+            garment: desc || partNames.join(' + '), scene: 'studio_white', scene_desc: '',
+            style: '温柔居家', props: [], shot_count: n, total_seconds: secs, extra: '',
+            float_mode: true, float_variant: 'piece', base_outfit: baseTxt,
+            parts: partNames, part_kinds: partKinds,
+            // 换装风格:throw = 每件一镜飞入 / static = 逐件静态图
+            piece_style: this.pieceStyle,
+            picked_shots: this.pickedShots.slice(), custom_actions: [],
+          },
+        });
+        // 后端把清单行数也回传了 —— **镜头数以它为准**。上面那个 n 是按第 3 栏件数估的,
+        // 清单里还会有从配饰栏进来的"携带件"(包 / 围裙…),估少了排分镜就会截断尾巴
+        // (最后那件的换装镜 + 细节镜全没,状态链跟着错位)。
+        const nAll = d.shot_count || n;
+        const secsAll = +(2.5 * nAll).toFixed(1);
+        // 2) 拆成镜头(认件/绑图交给下面的 assignments)
+        const plan = await req('/api/projects/analyze-script', {
+          method: 'POST',
+          body: { script: d.script, shot_count: nAll, total_seconds: secsAll,
+                  content_mode: true, garment_desc: desc || partNames.join(' + ') },
+        });
+        // 3) 绑图:按「部位」把每件对到第 2/3/6 栏里那张图(件名是开放词表,不能只靠名字匹配)
+        // **顺序要紧:第 3 栏(要换上的)和第 6 栏(配饰)排在打底前面。**
+        // 分组匹配是"同组取第一个",而「长裤」和「阔腿裤」会被分进同一组 —— 打底排前面的话,
+        // 要换的那条阔腿裤会绑上打底长裤的图(实测 167:s05 的「套装-阔腿裤」拿到的是长裤的照片)。
+        const rows = [...this.pieces, ...this.acc, ...this.base];
+        const key = (s) => {
+          s = String(s || '');
+          const groups = [
+            ['墨镜', '太阳镜', '眼镜'], ['包', '手袋', '托特', '背包', '方包'],
+            ['鞋', '球鞋', '靴', '凉鞋'], ['吊带背心', '吊带', '背心'], ['开衫'], ['连衣裙'],
+            ['长袖衫', '长袖上衣', '长袖'], ['短袖衫', '短袖上衣', '短袖'],
+            ['长裤', '阔腿裤', '裤'], ['半裙', '裙'], ['内搭', '打底衫'],
+            ['外套', '大衣', '风衣', '羽绒'], ['卫衣'], ['连体衣'], ['帽子', '帽'],
+            ['项链'], ['围巾', '丝巾'], ['腰带', '皮带'], ['耳环', '耳钉'], ['手表', '腕表'],
+            ['手套'], ['配饰'], ['上衣', '衫', 'T恤'],
+          ];
+          for (const g of groups) if (g.some(k => s.includes(k))) return g[0];
+          return s;
+        };
+        const assignments = {};
+        for (const k of ['characters', 'props', 'scenes']) {
+          for (const x of (plan[k] || [])) assignments[k + ':' + x.name] = [];
+        }
+        assignments['characters:她'] = [this.personRef];
+        for (const x of (plan.props || [])) {
+          // ① 完全同名 ② 双向包含(「套装-阔腿裤」↔「阔腿裤」) ③ 同「部位」分组兜底
+          const hit = rows.find(r => r.name && r.name === x.name)
+                   || rows.find(r => r.name && (r.name.includes(x.name) || x.name.includes(r.name)))
+                   || rows.find(r => r.name && key(r.name) === key(x.name));
+          if (hit) assignments['props:' + x.name] = ['asset:' + hit.id];
+        }
+        // **用户上传的「要换上的每一件」再按它自己的名字直接绑一次图** —— 上面那段是拿
+        // plan.props 去反查,而 plan.props 的件名是**模型给的**(可能被改名,也可能干脆漏列)。
+        // 「分析剧本」那步模型过载时(实测 DeepSeek "Service is too busy")会把件名整条漏掉,
+        // 于是这几件衣服一个参考图都没有:换装镜只剩人物图 + 打底(用户报"人物图怎么没有了")。
+        // 件名 + 图是页面上的确定值,这里直接绑 —— 模型退化成什么样都不丢。
+        for (const x of this.pieces) {
+          if (x.name) assignments['props:' + x.name] = ['asset:' + x.id];
+        }
+        // 常驻配饰(墨镜 / 拖鞋…)也绑图:后端会把它们补进每一镜的 props,
+        // 参考图按件名精确对上就能一路戴上(不绑的话模型手上没样本,墨镜会根本不出现)。
+        for (const x of this.acc) {
+          if (!x.name) continue;
+          assignments['props:' + x.name] = ['asset:' + x.id];
+        }
+        // 项目级「开合」覆盖:件列表里给每件选的开合(空 = 跟着素材库 / 全局默认)。
+        // 按**参考图 ref** 传下去 —— 分析剧本那步可能给这件改名,按件名传就白设了。
+        const closes = {};
+        for (const p of this.pieces) {
+          const c = String(p.close || '').trim();
+          if (c) closes['asset:' + p.id] = c;
+        }
+        // 4) 建工程(base_items = 第 2 栏的旧件,带图)
+        const res = await req('/api/projects/from-script', {
+          method: 'POST',
+          body: {
+            title: `${desc || partNames.join('+')} · 按件换装`, total_seconds: secsAll, shot_count: nAll,
+            mode: 'ref', plan, assignments, closes, base_items: pack(this.base),
+            accessories: pack(this.acc),
+            // 第 4 栏「风格参考图」:以前按件排镜没传,现在挂在每一镜参考图最后当"实拍穿着参考"。
+            style_items: pack(this.styles),
+            float_mode: true, float_variant: 'piece', float_base_outfit: baseTxt,
+            // 换装风格:throw = 扔过来飞入 / static = 逐件静态图
+            piece_style: this.pieceStyle,
+            piece_names: partNames,
+            garment_desc: desc || partNames.join(' + '),
+            // 人物头像:整片所有分镜都用它锁头部(不传就按人物图里的脸)
+            head_ref: this.headRef || '',
+          },
+        });
+        this.projectId = res.project.id;
+        this.stage = 'render'; this.jobMsg = '已提交渲染，正在按件生成…'; this.busy = false;
+        await req(`/api/projects/${this.projectId}/render`, { method: 'POST', body: {} });
+        this.poll();
+      } catch (e) {
+        this.err = e.message; this.busy = false; this.running = false;
+      }
+    },
+
+    async start() {
+      this.err = ''; this.busy = true; this.running = true;
+      this.projectId = null; this.finalUrl = ''; this.progress = 0;
+      try {
+        // 1) 件名 / 描述:用素材上缓存好的;没认过的批量认一次(认完就缓存)
+        this.stage = 'read'; this.jobMsg = '正在认件（没认过的图会自动读一次）…';
+        await this.recognize([...this.base, ...this.acc, ...this.pieces]);
+        this.dedupeAll();                      // 同图同件名只留一条,不然会出「靴6 / 短裙5」这种
+        if (!this.pieces.length) {
+          throw new Error('第 3 栏「要换上的」至少要有一件衣服（传参考图或手动加一件）');
+        }
+        this.jobMsg = `认出 ${this.pieces.filter(p => p.name).length || this.pieces.length} 件要换上的`;
+
+        // 2) 建工程 + 开渲(后端编排:提示词 / 绑图 / 换装顺序都在服务端)
+        this.stage = 'build'; this.jobMsg = '正在编排换装顺序、生成提示词…';
+        // 件列表里每件都带自己那张参考图(p.id),所以 ref 各指各的:
+        // 一件一张平铺图 → 每件一张专属图;一张整套图拆出的多件 → 共用那张图。
+        const pack = (arr) => arr.map(x => ({ ref: 'asset:' + x.id, name: x.name || '', desc: x.desc || '' }));
+        const res = await req('/api/projects/whole-look', {
+          method: 'POST',
+          body: {
+            person: this.personRef,
+            base_items: pack(this.base),
+            new_items: pack(this.pieces),
+            accessories: pack(this.acc),
+            // 第 4 栏「风格参考图」:作为「实拍穿着参考」挂在参考图最后(不占件)。
+            // 后端会自动配一句"只参考它身上这套衣服的款式 / 颜色 / 穿法,不要参考那个人"。
+            style_items: pack(this.styles),
+            // 第 7 栏勾的「通用分镜」:接在换装镜后面一起建进同一工程
+            shot_keys: this.pickedShots.slice(),
+            scene: 'studio_white',
+            // 人物头像:整片所有分镜都用它锁头部
+            head_ref: this.headRef || '',
+          },
+        });
+        this.projectId = res.project.id;
+        this.stage = 'render'; this.jobMsg = '已提交渲染，正在生成这一镜…';
+        this.busy = false;
+        this.poll();
+      } catch (e) {
+        this.err = e.message; this.busy = false; this.running = false;
+      }
+    },
+
+    async poll() {
+      if (!this.projectId) return;
+      try {
+        const p = await req(`/api/projects/${this.projectId}`);
+        const j = p.latest_job;
+        if (j) {
+          this.jobMsg = j.message || this.jobMsg;
+          this.progress = j.progress || 0;
+          if (j.status === 'failed' || j.status === 'canceled') {
+            this.err = j.error || '生成失败'; this.running = false; return;
+          }
+        }
+        if (p.final_url || (j && j.status === 'done')) {
+          this.finalUrl = p.final_url || '';
+          this.progress = 100; this.stage = 'done'; this.running = false;
+          this.jobMsg = '完成';
+          return;
+        }
+        this.progress = Math.max(this.progress, 5);
+      } catch (e) { this.err = e.message }
+      setTimeout(this.poll, 4000);
+    },
+    /** 进主应用的编辑器:把「当前打开的项目」写进它读的那份界面状态,再跳过去 */
+    openEditor() {
+      if (!this.projectId) return;
+      try {
+        localStorage.setItem('ovs_ui', JSON.stringify({
+          view: 'editor', projectId: this.projectId, sel: 0, scriptStep: 1,
+        }));
+      } catch (e) { /* 存不下就直接回首页 */ }
+      location.href = '/';
+    },
+    /** 成片是静态图(piece_style='static')还是视频:按扩展名判。 */
+    isImageUrl(u) { return /\.(png|jpe?g|webp)($|\?)/i.test(u || ''); },
+    reset() {
+      this.running = false; this.stage = ''; this.projectId = null;
+      this.finalUrl = ''; this.progress = 0; this.jobMsg = ''; this.err = '';
+    },
+  },
+}).mount('#app');
+</script>
+</body>
+</html>
