@@ -137,6 +137,18 @@ cd backend && pip install -r requirements.txt && python run.py
 
 <img src="./docs/images/camera-editor.png" alt="多角度机位编辑器" width="520">
 
+### 分镜剧本编辑器
+
+同一节点切到 Tab 就是分镜剧本面板 — 把复杂的提示词结构化掉：
+
+- **素材气泡**：顶部的 `#5 场景图`、`#1-8 衣服/道具参考图` 直接点击插入，不用手动贴链接
+- **分段剧本**：`【场景】` `【人物】` 自然分段，AI 按字段对应生成，不会混乱
+- **参考图分工**：参考图视频 / 抽卡次数 / 种子 / 分辨率 / 是否参与生成，一屏全调
+- **AI 优化**：`AI 优化` / `精简` / `最终文案` 三个按钮，改不懂 Prompt 也能出活
+- **机位联动**：底部显示上一个 Tab 选的机位参数，剧本和机位自动组合
+
+<img src="./docs/images/prompt-editor.png" alt="分镜剧本编辑器" width="520">
+
 ---
 
 ## 🎯 完整创作流程 / Complete Workflow

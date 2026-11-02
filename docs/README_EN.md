@@ -139,6 +139,18 @@ All values are auto-written into the prompt: locked position, no pan/tilt/zoom.
 
 <img src="./images/camera-editor.png" alt="Multi-angle camera editor" width="520">
 
+### Shot Script Editor
+
+The same node switches to a script-writing tab — structured prompts that stay clean:
+
+- **Asset chips**: click `#5 scene image`, `#1-8 garment refs` at the top — no manual URL paste
+- **Sections**: `[Scene]` `[Character]` are naturally separated; AI renders each field correctly
+- **Per-shot controls**: ref video / card-pick count / seed / resolution / include-in-generation — all on one screen
+- **AI polish**: `AI Optimize` / `Shorten` / `Final Copy` buttons — works even if you've never written a prompt
+- **Camera sync**: bottom of the panel shows the camera params from the tab above — script + camera combine automatically
+
+<img src="./images/prompt-editor.png" alt="Shot script editor" width="520">
+
 ---
 
 ## 🎯 Complete Workflow
