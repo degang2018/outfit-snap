@@ -125,6 +125,8 @@ Nodes chain freely, with image / text / video assets. Render one, rerun one, or 
 
 <img src="./images/editor-flow.png" alt="Editor node flow">
 
+<img src="./images/split-tool.png" width="480" alt="Multi-mode nodes">
+
 ### Multi-Angle Camera Editor
 
 Every shot node has a built-in camera panel — no prompt engineering needed, just sliders:

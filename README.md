@@ -123,6 +123,8 @@ cd backend && pip install -r requirements.txt && python run.py
 
 <img src="./docs/images/editor-flow.png" alt="编辑器节点式编排">
 
+<img src="./docs/images/split-tool.png" width="480" alt="多类型节点示意">
+
 ### 多角度机位编辑器
 
 每个分镜节点都自带机位面板 — 不用懂 Prompt，拖拖滑块就能：
