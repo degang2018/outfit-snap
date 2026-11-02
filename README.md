@@ -19,7 +19,7 @@
 https://github.com/user-attachments/assets/a495e83b-8bb4-4beb-8729-91e3cc6640d2
 
 
-[中文](#) | [English](./docs/README_EN.md) | [快速上手](#-快速上手) | [核心特性](#-核心特性) | [界面截图](#-界面截图) | [FAQ](#-常见问题) | [LICENSE](#-开源协议)
+[快速上手](#-快速上手) | [核心特性](#-核心特性) | [界面截图](#-界面截图) | [FAQ](#-常见问题) | [LICENSE](#-开源协议)
 
 ---
 
