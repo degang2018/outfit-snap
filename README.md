@@ -1,6 +1,12 @@
-## 👗 OutfitSnap · AI 分镜短视频工坊
+## 👗 OutfitSnap
+
+### 🇨🇳 衣秒成片 · AI 分镜短视频工坊
 
 > 上传人物参考图 + 场景 + 道具 + 衣服，按分镜编排：衣服飞入换装、场景切换、人物动作变化、推拉摇移机位…… MiniMax H3 + ComfyUI 一键渲染拼接成一条带货视频。
+
+### 🇺🇸 AI Storyboard Short Video Studio
+
+> Upload character references + scenes + props + garments, arrange into shots: flying-in outfit flips, scene cuts, pose changes, push-in/pan camera moves… MiniMax H3 + ComfyUI renders and stitches everything into a complete product video.
 
 ---
 
@@ -20,7 +26,7 @@ https://github.com/user-attachments/assets/a495e83b-8bb4-4beb-8729-91e3cc6640d2
 
 ---
 
-## ✨ 核心特性
+## ✨ 核心特性 / Core Features
 
 | 🎬 分镜式编排                 | 🪄 衣服飞入换装                     | 👤 人物身份锁死                  | 🔄 场景/动作/机位切换          |
 | -------------------------- | ------------------------------- | --------------------------- | ----------------------- |
@@ -36,7 +42,7 @@ https://github.com/user-attachments/assets/a495e83b-8bb4-4beb-8729-91e3cc6640d2
 
 ---
 
-## 🚀 快速上手
+## 🚀 快速上手 / Quick Start
 
 ### 三步就能跑（Windows 用户）⭐
 
@@ -87,7 +93,7 @@ cd backend && pip install -r requirements.txt && python run.py
 
 ---
 
-## 🧩 ComfyUI 模型清单
+## 🧩 ComfyUI 模型清单 / Model Checklist
 
 在 ComfyUI 的 `models/` 目录下放好这些文件（文件名可在 `.env` 里覆盖）：
 
@@ -102,7 +108,7 @@ cd backend && pip install -r requirements.txt && python run.py
 
 ---
 
-## 📸 界面截图
+## 📸 界面截图 / Screenshots
 
 ### 资源管理工具箱
 
@@ -130,7 +136,7 @@ cd backend && pip install -r requirements.txt && python run.py
 
 ---
 
-## 🎯 完整创作流程
+## 🎯 完整创作流程 / Complete Workflow
 
 ```
 第 1 步:攒素材 (素材库可持久化,下次复用免重传)
@@ -163,7 +169,7 @@ cd backend && pip install -r requirements.txt && python run.py
 
 ---
 
-## 🏗️ 目录结构
+## 🏗️ 目录结构 / Directory Structure
 
 ```
 outfit-snap/
@@ -204,7 +210,7 @@ outfit-snap/
 
 ---
 
-## 🧠 核心架构
+## 🧠 核心架构 / Architecture
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -239,7 +245,7 @@ outfit-snap/
 
 ---
 
-## 🛠️ 配置详解 (.env)
+## 🛠️ 配置详解 (.env) / Configuration
 
 复制自 `backend/.env.example`，关键字段：
 
@@ -258,7 +264,7 @@ outfit-snap/
 
 ---
 
-## 🛠️ 开发者指南
+## 🛠️ 开发者指南 / Developer Guide
 
 ### 改前端 UI
 
@@ -292,7 +298,7 @@ docker run --rm -it -p 8000:8000 outfit-snap:dev
 
 ---
 
-## 🔒 安全说明
+## 🔒 安全说明 / Security
 
 - `backend/.env` **绝不能**提交到 Git（已在 .gitignore 里）
 - 改了 `JWT_SECRET` 后旧 Token 会全部失效 — 正常，生产环境每次部署都换一次
@@ -302,7 +308,7 @@ docker run --rm -it -p 8000:8000 outfit-snap:dev
 
 ---
 
-## ❓ 常见问题
+## ❓ 常见问题 / FAQ
 
 **Q: Docker 里访问不了 ComfyUI？**
 A: `.env` 里 `COMFY_API` 写 `http://host.docker.internal:8188`，docker-compose.yml 已配了 `extra_hosts`。
@@ -321,7 +327,7 @@ A: 删掉 `backend/app.db` 和 `backend/storage/` 里的素材重新来；或者
 
 ---
 
-## 📋 技术栈
+## 📋 技术栈 / Tech Stack
 
 | 层 | 技术 |
 |----|------|
@@ -334,7 +340,7 @@ A: 删掉 `backend/app.db` 和 `backend/storage/` 里的素材重新来；或者
 
 ---
 
-## 📜 开源协议
+## 📜 开源协议 / License
 
 MIT License — 随便用、随便改、随便 fork。
 
