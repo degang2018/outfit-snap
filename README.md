@@ -10,14 +10,11 @@
 [![Docker](https://img.shields.io/badge/Docker-可用-1.svg)](#)
 [![Windows](https://img.shields.io/badge/Windows-一键启动-4.svg)](#)
 
-<div align="center">
-  <a href="https://github.com/degang2018/outfit-snap/blob/main/docs/media/split-demo.mp4">
-    <img src="./docs/images/editor-flow.png" width="100%" style="border-radius:12px;border:1px solid #30363d">
-  </a>
-  <p style="color:#8b949e;font-size:13px;margin-top:8px">
-    👆 点击上图观看分镜渲染效果 · 衣服从画外飞来落到身上 · 4 秒一条
-  </p>
-</div>
+https://github.com/user-attachments/assets/a495e83b-8bb4-4beb-8729-91e3cc6640d2
+
+<p align="center" style="color:#8b949e;font-size:13px;margin-top:8px">
+  👆 一件衣服 = 一镜，衣服从画外飞来落到身上，原来那件被顶掉 — 4 秒一条分镜
+</p>
 
 [中文](#) | [English](./docs/README_EN.md) | [快速上手](#-快速上手) | [核心特性](#-核心特性) | [界面截图](#-界面截图) | [FAQ](#-常见问题) | [LICENSE](#-开源协议)
 

@@ -10,14 +10,11 @@
 [![Docker](https://img.shields.io/badge/Docker-Available-1.svg)](#)
 [![Windows](https://img.shields.io/badge/Windows-OneClick-4.svg)](#)
 
-<div align="center">
-  <a href="https://github.com/degang2018/outfit-snap/blob/main/docs/media/split-demo.mp4">
-    <img src="./images/editor-flow.png" width="100%" style="border-radius:12px;border:1px solid #30363d">
-  </a>
-  <p style="color:#8b949e;font-size:13px;margin-top:8px">
-    👆 Click to watch the split-shot render · Garment flies in · 4 seconds per shot
-  </p>
-</div>
+https://github.com/user-attachments/assets/a495e83b-8bb4-4beb-8729-91e3cc6640d2
+
+<p align="center" style="color:#8b949e;font-size:13px;margin-top:8px">
+  👆 One garment = one shot — flies in, settles, pushes the previous one out — 4 seconds each
+</p>
 
 [中文](../README.md) | [English](#) | [Quick Start](#-quick-start) | [Features](#-core-features) | [Screenshots](#-screenshots) | [FAQ](#-faq) | [License](#-license)
 
