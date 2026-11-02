@@ -1,4 +1,4 @@
-## 👗 OutfitSnap · AI Storyboard Short Video Studio
+﻿## 👗 OutfitSnap · AI Storyboard Short Video Studio
 
 > Upload character references + scenes + props + garments, arrange into shots: flying-in outfit flips, scene cuts, pose changes, push-in/pan camera moves… MiniMax H3 + ComfyUI renders and stitches everything into a complete product video.
 
@@ -108,7 +108,7 @@ Place these files in your ComfyUI `models/` directory (filenames overridable via
 
 One-stop panel for assets + utilities — garment split / extract / image eraser / shot manager / render settings / API config.
 
-<img src="./images/assets-panel.png" width="280" alt="Asset sidebar">
+<img src="./images/assets-panel.png" width="100%" alt="Asset sidebar">
 
 ### Multi-Mode Shot Nodes
 
@@ -123,9 +123,9 @@ Each shot is a node that supports **4 video-generation modes**:
 
 Nodes chain freely, with image / text / video assets. Render one, rerun one, or rerun all independently.
 
-<img src="./images/editor-flow.png" alt="Editor node flow">
+<img src="./images/editor-flow.png" width="100%" alt="Editor node flow">
 
-<img src="./images/split-tool.png" width="480" alt="Multi-mode nodes">
+<img src="./images/split-tool.png" width="100%" alt="Multi-mode nodes">
 
 ### Multi-Angle Camera Editor
 
@@ -139,7 +139,7 @@ Every shot node has a built-in camera panel — no prompt engineering needed, ju
 
 All values are auto-written into the prompt: locked position, no pan/tilt/zoom.
 
-<img src="./images/camera-editor.png" alt="Multi-angle camera editor" width="520">
+<img src="./images/camera-editor.png" width="100%" alt="Multi-angle camera editor">
 
 ### Shot Script Editor
 
@@ -151,7 +151,7 @@ The same node switches to a script-writing tab — structured prompts that stay 
 - **AI polish**: `AI Optimize` / `Shorten` / `Final Copy` buttons — works even if you've never written a prompt
 - **Camera sync**: bottom of the panel shows the camera params from the tab above — script + camera combine automatically
 
-<img src="./images/prompt-editor.png" alt="Shot script editor" width="520">
+<img src="./images/prompt-editor.png" width="100%" alt="Shot script editor">
 
 ---
 

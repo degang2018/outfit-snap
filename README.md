@@ -106,7 +106,7 @@ cd backend && pip install -r requirements.txt && python run.py
 
 侧边栏一站式管理素材和工具 — 衣服分割 / 提取衣服 / 图片橡皮 / 分镜管理 / 成片设置 / 接口配置。
 
-<img src="./docs/images/assets-panel.png" width="280" alt="资源管理侧边栏">
+<img src="./docs/images/assets-panel.png" width="100%" alt="资源管理侧边栏">
 
 ### 多类型分镜节点
 
@@ -121,9 +121,9 @@ cd backend && pip install -r requirements.txt && python run.py
 
 节点之间可串联，支持图片 / 文本 / 视频素材，点哪个渲染哪个，重跑不影响已经好的镜。
 
-<img src="./docs/images/editor-flow.png" alt="编辑器节点式编排">
+<img src="./docs/images/editor-flow.png" width="100%" alt="编辑器节点式编排">
 
-<img src="./docs/images/split-tool.png" width="480" alt="多类型节点示意">
+<img src="./docs/images/split-tool.png" width="100%" alt="多类型节点示意">
 
 ### 多角度机位编辑器
 
@@ -137,7 +137,7 @@ cd backend && pip install -r requirements.txt && python run.py
 
 所有参数会自动写进提示词，机位固定、不推拉摇移、不变焦。
 
-<img src="./docs/images/camera-editor.png" alt="多角度机位编辑器" width="520">
+<img src="./docs/images/camera-editor.png" width="100%" alt="多角度机位编辑器">
 
 ### 分镜剧本编辑器
 
@@ -149,7 +149,7 @@ cd backend && pip install -r requirements.txt && python run.py
 - **AI 优化**：`AI 优化` / `精简` / `最终文案` 三个按钮，改不懂 Prompt 也能出活
 - **机位联动**：底部显示上一个 Tab 选的机位参数，剧本和机位自动组合
 
-<img src="./docs/images/prompt-editor.png" alt="分镜剧本编辑器" width="520">
+<img src="./docs/images/prompt-editor.png" width="100%" alt="分镜剧本编辑器">
 
 ---
 
