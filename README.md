@@ -11,10 +11,11 @@
 [![Windows](https://img.shields.io/badge/Windows-一键启动-4.svg)](#)
 
 <div align="center">
-  <video src="./docs/media/split-demo.mp4" controls playsinline muted
-         style="width:100%;max-width:720px;border-radius:12px;border:1px solid #30363d"></video>
+  <a href="https://github.com/degang2018/outfit-snap/blob/main/docs/media/split-demo.mp4">
+    <img src="./docs/images/editor-flow.png" width="100%" style="border-radius:12px;border:1px solid #30363d">
+  </a>
   <p style="color:#8b949e;font-size:13px;margin-top:8px">
-    👆 一件衣服 = 一镜，衣服从画外飞来落到身上，原来那件被顶掉 — 4 秒一条分镜
+    👆 点击上图观看分镜渲染效果 · 衣服从画外飞来落到身上 · 4 秒一条
   </p>
 </div>
 
